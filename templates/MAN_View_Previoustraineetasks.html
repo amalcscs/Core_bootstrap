@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'MAN_index.html' %}
 {% block content %}
 {% load static %}
 
@@ -6,7 +6,7 @@
     <div class="col-12 grid-margin">
       <div class="card mt-3">
         <div class="card-body">
-          <h4 class="card-title">Tasks of Lucy Abbott(Previous Trainee name)</h4>
+          <h4 class="card-title">Tasks</h4>
           <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Tasks" title="Type in a name" class="form-control text-white">
           <div class="table-responsive">
             <table class="table" id="myTable">
@@ -20,43 +20,16 @@
                 </tr>
               </thead>
               <tbody>
+                {% for i in trainer_task%}
+                <tr>
+                  <td>{{i.taskname}}</td>
+                  <td> {{i.startdate|date:"d-m-Y"}} </td>
+                  <td> {{i.enddate|date:"d-m-Y"}} </td>
+                  <td><label class="badge badge-success">{{i.status}}</label></td>
+                  <td> <button  class="btn btn-primary" ><a href="{{ i.files.url }}" style="color: white; text-decoration: none;" download="{{ i.files.url}}">Download</a></button> </td>
+                </tr>
+                {% endfor %}
                 
-                <tr>
-                  <td>Palindrome</td>
-                  <td> 01.Sep.2021 </td>
-                  <td> 02.Sep.2021 </td>
-                  <td><label class="badge badge-success">Completed</label></td>
-                  <td> <button type="button" class="btn btn-primary btn-fw">Download</button> </td>
-                </tr>
-                
-                <tr>
-                    <td>Leap Year</td>
-                    <td> 03.Sep.2021 </td>
-                    <td> 04.Sep.2021 </td>
-                    <td><label class="badge badge-danger">Not Submitted</label></td>
-                    <td> <button type="button" class="btn btn-primary btn-fw">Download</button> </td>
-                </tr>
-                <tr>
-                    <td>Even or odd</td>
-                    <td> 05.Sep.2021 </td>
-                    <td> 06.Sep.2021 </td>
-                    <td><label class="badge badge-success">Completed</label></td>
-                    <td> <button type="button" class="btn btn-primary btn-fw">Download</button> </td>
-                </tr>
-                <tr>
-                    <td>Sum of 2 numbers</td>
-                    <td> 07.Sep.2021 </td>
-                    <td> 08.Sep.2021 </td>
-                    <td><label class="badge badge-success">Completed</label></td>
-                    <td> <button type="button" class="btn btn-primary btn-fw">Download</button> </td>
-                </tr>
-                <tr>
-                    <td>Fibonacci Series</td>
-                    <td> 09.Sep.2021 </td>
-                    <td> 10.Sep.2021 </td>
-                    <td><label class="badge badge-success">Completed</label></td>
-                    <td> <button type="button" class="btn btn-primary btn-fw">Download</button> </td>
-                </tr>
               </tbody>
             </table>
           </div>

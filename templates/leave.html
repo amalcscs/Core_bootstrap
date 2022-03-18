@@ -81,7 +81,7 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6  mt-5 mb-5" style="border-radius: 20px; background-color:  #191c24;">
-            <form method="POST" action="admin_leave_form" enctype="multipart/form-data" id="myForm">
+            <form method="POST" action="#" enctype="multipart/form-data" id="myForm">
                 {% csrf_token %}
                 <center>
                     <div class="mt-5" style="font-size:30px;font-weight: bolder;color: white;">APPLY FOR LEAVE</div>
@@ -206,7 +206,7 @@
 
             swalWithBootstrapButtons.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                text: "Do you want to apply !",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes, apply Leave!',

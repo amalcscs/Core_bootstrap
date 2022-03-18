@@ -1,157 +1,48 @@
-{% extends 'index.html' %}
-{% load static %}
-{% block content %}
+{% extends 'index_trainingmanager.html' %}
+ {% load static %}
+  {% block content %}
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<style>
-#tble{
-  margin-bottom: 5px;
-  color: #6c7293; 
-   /* width: 65%; 
-  margin-top: 25px; */
-  /* margin-left: 25%;  */
-  width: 100%;
-  display: none;
-}
-@media only screen and (max-width: 1300px){
-   .container{
-     margin-top: 3rem;
-   } 
-  }
- 
-</style>
-<body>
-  
-
+  <div class="row" style="padding-top:20px;">
     
-  <div class="container">
-    <div class="card" style="margin-top: 20px;">
-      <h2 style="margin-left: 20px;padding-top: 2rem;">ATTENDANCE</h2>
-      
-        <div class="card-body">
-         <form class="form-inline">
-            <div class="">
-                 <!-- <label>SELECT FROM DATE</label>  -->
-                 <label class="sr-only" for="inlineFormInputName2">SELECT FROM</label>
-                 <input type="date" class="form-control mb-2 mr-sm-2" id="txtFrom">
-                
-            <div class="">
-              <label class="sr-only" for="inlineFormInputName2">SELECT TO</label>
-              <input type="date" class="form-control mb-2 mr-sm-2" id="txtTo">
-             
-            </div>
-            <!-- <button id="btnSearch" type="button" class="btn btn-danger Search"  >Search</button> -->
-            <div class="row">
-              <div class="col-md-4"></div>
-              <div class="col-md-4"></div>
-              <div class="col-md-4">
-                <button type="button" style="height: 40px;" id="btnSearch" class="btn btn-primary mb-2 mt-2 w-100">Search</button>
+    <div class="col-sm-6 grid-margin">
+      <a href="Trainees_Calendar" style="text-decoration: none">
+      <div class="card" style="height: 280px">
+      <div class="card-body">
+        <div class="row" style="padding-top:50px;">
+            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+              <div class="d-flex d-sm-block d-md-flex align-items-center">
+                <h2 class="mb-0" style= "color:white;">Trainees</h2>
+             </div>
               </div>
+            <div class="col-4 col-sm-12 col-xl-2 text-center text-xl-right">
+              <i class="icon-lg mdi mdi-account-key text-warning ms-auto"></i>
             </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    </div>
 
-            <div class="row">   
-              <div class="col-12 grid-margin">
-                     
-                    <table class="table  table-responsive w-100" id="tble">
-                      <thead>
-                        <tr>
-                          <th>DATE</th>
-                          <th>STATUS</th>
-                          <th>LOGIN TIME</th>
-                          <th>LOGOUT TIME</th>
-                        </tr>
-                      </thead>                    
-                      <tbody>
-                        <tr>
-                          <td>05/02/2022</td>
-                          <td>
-                            <div class="progress">
-                              <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                          <td>10.00 am</td>
-                          <td>05.00 9m</td>
-                        </tr>
-                        <tr>
-                          <td>06/02/2022</td>
-                          <td>
-                            <div class="progress">
-                              <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                          <td>10.00 am</td>
-                          <td>05.00 9m</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                 
+    <div class="col-sm-6 grid-margin">
+      <a href="Trainers_Calendar" style="text-decoration: none">
+      <div class="card" style="height: 280px">
+      <div class="card-body">
+        <div class="row" style="padding-top:50px;">
+            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+              <div class="d-flex d-sm-block d-md-flex align-items-center">
+                <h2 class="mb-0" style= "color:white;">Trainers</h2>
+             </div>
               </div>
+            <div class="col-4 col-sm-12 col-xl-2 text-center text-xl-right">
+              <i class="icon-lg mdi mdi-account-supervisor text-primary ms-auto"></i>
             </div>
-          </form>
+          </div>
+          
         </div>
       </div>
     </div>
-    </div>
+  </a>
+</div>
+  {%endblock%}
 
-    {% comment %} <script>
-      var a;
-      function display()
-      {
-        if(a==1)
-        {
-          document.getElementById("tble").style.display="block";
-        }
-        
-      }
-    </script> {% endcomment %}
-    
-    {% comment %} <script type="text/javascript">
-      $("#btnSearch").click(function() {
-        const deptId = $("txtFrom").val();
-        const desgId = $("txtTo").val();
-        $.ajax({
-          url: 'TLattendance',
-          data: {
-            'dept_id': deptId,
-            'desig_id': desgId
-          },
-          success: function(data){
-            $(#tble).html(data);
-          }
-        });
-      });
-      function show(){
-        document.getElementById('tble').style.display ="block";
-      }
-    </script> {% endcomment %}
-
-    <script>
-      const targetDiv = document.getElementById("tble");
-      const btn = document.getElementById("btnSearch");
-      btn.onclick = function () {
-        if (targetDiv.style.display = "block") {
-          targetDiv.style.display = "block";
-        } else {
-          targetDiv.style.display !== "none";
-        }
-      };
-    </script>
-
-
-<script>
-  $(function () {
-    $("#txtFrom").datepicker({
-      minDate: new Date(2022, 2 - 1, 1)
-    });
-  });
-  $(function () {
-    $("#txtTo").datepicker({
-      maxDate: new Date(2022, 3 - 1, 1)
-    });
-  });
-</script>
-    </body>
-{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'index.html'%}
+{% extends 'MAN_index.html'%}
 {% load static %}
 {% block content %}
 
@@ -34,11 +34,11 @@
 </style>
 
 <div class="row">
-    <div class="col-11 grid-margin table1">
+    <div class="col-12 grid-margin table1">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Internship Registration (View By Date)</h4>
-                <input type="text" class="form-control " id="search" name="search" autocomplete="off" placeholder="Search...">
+                <input type="text" class="form-control " onkeyup="myFunction()" id="search" name="search" autocomplete="off" placeholder="Search...">
                 <br>
                 <div class="table-responsive">
                     <table class="table" id="myTable">
@@ -49,6 +49,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for i in newdata %}
                             <tr>
                                 <!-- <td>
                                     <div class="form-check form-check-muted m-0">
@@ -58,23 +59,12 @@
                                     </div>
                                 </td> -->
                             
-                                <td> 2022-10-5</td>
-                                <td> <a href="{% url 'man_internship'%}">Show all</a></td>
+                                <td> {{i.reg_date|date:'d-m-Y'}}</td>
+                                <td> <a href="man_internship_dateview?date1={{i.reg_date|date:'Y-m-d'}}"><div class="badge badge-outline-info">Show All</div></a></td>
                          
                             </tr>
-                            <tr>
-                                <!-- <td>
-                                    <div class="form-check form-check-muted m-0">
-                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input">
-                                        </label>
-                                    </div>
-                                </td> -->
-                            
-                                <td> 2022-10-10</td>
-                                <td> <a href="{% url 'man_internship'%}">Show all</a></td>
-                         
-                            </tr>
+                            {% endfor %}
+                           
                            
                         </tbody>
                     </table>
@@ -149,6 +139,23 @@
     });
 
 
-
+    function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
 </script>
 {% endblock %}

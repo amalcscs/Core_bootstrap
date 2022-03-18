@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'MAN_index.html' %}
 {% block content %}
 {% load static %}
 
@@ -7,67 +7,50 @@
       <div class="card mt-3">
         <div class="card-body">
           <h4 class="card-title">Trainers</h4>
-          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" class="form-control" style="color:white;">
+          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" class="form-control text-white">
           <div class="table-responsive">
             <table class="table" id="myTable">
               <thead>
                 <tr>
+                    
                   <th> Trainer Name </th>
                   <th> Employee ID </th>
-                  <th> Salary </th>
+                  <th> Project Names</th>
                   <th> Department </th>
                   <th> Joining Date </th>
                 </tr>
               </thead>
-              <tbody>
-                
-                <tr>
+              <tbody id="myTable">
+
+                {% for i in user_registration %}
+                  
+                <tr data-href="{% url 'MAN_View_Trainerprofile' i.id %}">
+                 
                   <td>
-                    <a href="{% url 'MANViewTrainerprofile' %}" style="text-decoration: none;color: gray"><span class="ps-2">Henry Klein</span></a>
+                  <img src="{{i.photo.url}}" alt="">
+                    <span class="ps-2">{{i.fullname}}</span>
                   </td>
-                  <td> 02312 </td>
-                  <td> $14,500 </td>
-                  <td> Dashboard </td>
-                  <td> 04 Dec 2019 </td>
-                </tr>
-                
-                <tr>
+                  <td>{{i.employee_id}}</td>
+                 
                   <td>
-                    <span class="ps-2">Estella Bryan</span>
+                    {% for j in project %}
+                    {% if j.projectmanager.id == i.id %}
+                    <li>{{j.project}}<br><br>
+
+                    {% endif %}
+                    {% endfor %}
                   </td>
-                  <td> 02312 </td>
-                  <td> $14,500 </td>
-                  <td> Website </td>
-                  <td> 04 Dec 2019 </td>
+        
+                 
+                  <td>{{i.department}}</td>
+                  <td>{{i.joiningdate|date:"d-m-Y" }}</td>
+                 
                 </tr>
-                <tr>
-                  <td>
-                    <span class="ps-2">Lucy Abbott</span>
-                  </td>
-                  <td> 02312 </td>
-                  <td> $14,500 </td>
-                  <td> App design </td>
-                  <td> 04 Dec 2019 </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="ps-2">Peter Gill</span>
-                  </td>
-                  <td> 02312 </td>
-                  <td> $14,500 </td>
-                  <td> Development </td>
-                  <td> 04 Dec 2019 </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="ps-2">Sallie Reyes</span>
-                  </td>
-                  <td> 02312 </td>
-                  <td> $14,500 </td>
-                  <td> Website </td>
-                  <td> 04 Dec 2019 </td>
-                </tr>
+                {% endfor%}
+
+             
               </tbody>
+            
             </table>
           </div>
         </div>
@@ -106,6 +89,14 @@
       }
     }
     </script>
-
+<script>
+  $(document).ready(function(){
+  $('table tr').click(function(){
+    window.location = $(this).data('href');
+    return false;
+});
+});
+</script>
 
 {% endblock %}
+<tr data-href="{% url 'MAN_View_Trainerprofile' %}">

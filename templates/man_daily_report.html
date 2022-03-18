@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'MAN_index.html' %}
 {% load static %}
 {% block content %}
 <!DOCTYPE html>
@@ -6,18 +6,28 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-          var value = $(this).val().toLowerCase();
-          $("#myTable tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
-        });
-      });
-    </script>
+      function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
   </head>
   <body>
-    <div class="content-wrapper">    
+    {% comment %} <div class="content-wrapper">     {% endcomment %}
       <div class="row">   
         <div class="col-12 grid-margin">
           <div class="card">
@@ -39,27 +49,29 @@
                     </tr>
                   </thead>
                   <tbody>
+                    {% for i in test %}
+                      {% if i.user_id == proj_task.user_id%}
                     <tr>
+                      <td>{{i.date|date:"d-m-Y" }}</td>
+                      <td> {{i.user}} </td>
                       <td>
-                        02 Jan 2022
+                        {{i.task.description}}
                       </td>
-                      <td> Herman Beck </td>
-                      <td>
-                        Manager Module
-                      </td>
-                      <td> Project Module </td>
-                      <td> On Progress </td>
+                      <td> {{i.subtask}}</td>
+                      <td> {{i.status}} </td>
                       <td>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Download</button>
+                            <button type="submit" class="btn btn-primary" ><a href="{{ i.files.url }}" style="color: white;" download="{{ i.files.url}}">Download</a></button>
                         </div>
                         </td>
                     </tr>
-                    <tr>
+                    {% endif %}
+                    {% endfor %}
+                    <!-- <tr>
                       <td>
                         14 Jan 2022
                       </td>
-                      <td> Messsy Adam </td>
+                      <td> Messsy Adam  <a href="{{ i.files }}" style="color: white;">Download</a></td>
                       <td>
                         Manager Module
                       </td>
@@ -102,7 +114,7 @@
                             <button type="submit" class="btn btn-primary">Download</button>
                         </div>
                         </td>
-                    </tr>
+                    </tr> -->
                     
                   </tbody>
                 </table>
@@ -111,9 +123,7 @@
           </div>
         </div>
       </div>
-    </div>
+    {% comment %} </div> {% endcomment %}
   </body>
 </html>
-
-
 {% endblock%}

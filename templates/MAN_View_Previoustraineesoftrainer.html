@@ -1,12 +1,18 @@
-{% extends 'index.html' %}
+{% extends 'MAN_index.html' %}
 {% block content %}
 {% load static %}
+
+<style>
+  table tr[data-href] {
+    cursor: pointer;
+  }
+  </style>
 
 <div class="row ">
     <div class="col-12 grid-margin">
       <div class="card mt-3">
         <div class="card-body">
-          <h4 class="card-title">Previous Trainees of Henry Klein</h4>
+          <h4 class="card-title">Previous Trainees</h4>
           <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" class="form-control" style="color:white;">
           <div class="table-responsive">
             <table class="table" id="myTable">
@@ -20,53 +26,27 @@
                 </tr>
               </thead>
               <tbody>
+
+
+            
+              
+                {% for i in user_registration %}
+                {% for j in user_registration2 %}
+                  {% if i.team.id == j.team.id and j.status == 'Resign' %}
+
+                <tr data-href="{% url 'MAN_View_Previoustraineeprofile' j.id %}">
+                  <td>
+                    {{j.fullname}}
+                  </td>
+                  <td> {{j.id}} </td>
+                  <td> {{j.department}} </td>
+                  <td> {{j.joiningdate|date:"d-m-Y"}} </td>
+                  <td> {{j.enddate|date:"d-m-Y"}} </td>
+                </tr>
+                 {% endif %}
+                  {% endfor%}
+                  {% endfor%}
                 
-                <tr>
-                  <td>
-                    <span class="ps-2">Henry Klein</span>
-                  </td>
-                  <td> 02312 </td>
-                  <td> Dashboard </td>
-                  <td> 04 Dec 2019 </td>
-                  <td> 04 Dec 2020 </td>
-                </tr>
-                
-                <tr>
-                  <td>
-                    <span class="ps-2">Estella Bryan</span>
-                  </td>
-                  <td> 02312 </td>
-                  <td> Website </td>
-                  <td> 04 Dec 2019 </td>
-                  <td> 04 Dec 2020 </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="{% url 'ManViewPrevioustraineeprofile' %}" style="text-decoration: none" class="text-muted"><span class="ps-2">Lucy Abbott</span></a>
-                  </td>
-                  <td> 02312 </td>
-                  <td> App design </td>
-                  <td> 04 Dec 2019 </td>
-                  <td> 04 Dec 2020 </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="ps-2">Peter Gill</span>
-                  </td>
-                  <td> 02312 </td>
-                  <td> Development </td>
-                  <td> 04 Dec 2019 </td>
-                  <td> 04 Dec 2020 </td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="ps-2">Sallie Reyes</span>
-                  </td>
-                  <td> 02312 </td>
-                  <td> Website </td>
-                  <td> 04 Dec 2019 </td>
-                  <td> 04 Dec 2020 </td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -94,7 +74,15 @@
         }       
       }
     }
+
+$(document).ready(function(){
+  $('table tr').click(function(){
+    window.location = $(this).data('href');
+    return false;
+});
+});
     </script>
+    
 
 
 {% endblock %}
