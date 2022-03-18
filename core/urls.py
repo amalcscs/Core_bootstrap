@@ -913,6 +913,106 @@ urlpatterns = [
     re_path(r'^superadmin_index/$', views.superadmin_index, name="superadmin_index"),
     re_path(r'^superadmin_changepwd/$', views.superadmin_changepwd, name="superadmin_changepwd"),
     re_path(r'^superadmin_logout/$', views.superadmin_logout, name="superadmin_logout"),
+
+
+#**************************Anandhu Super-Admin Dashboard section**************************
+    re_path(r'^SuperAdmin_index/$', views.SuperAdmin_index, name='SuperAdmin_index'),
+    re_path(r'^SuperAdmin_dashboard/$', views.SuperAdmin_dashboard, name='SuperAdmin_dashboard'),
+    re_path(r'^SuperAdmin_profile/(?P<id>\d+)/$', views.SuperAdmin_profile, name='SuperAdmin_profile'),
+    re_path(r'^SuperAdmin_trainersdepartment/(?P<id>\d+)/$', views.SuperAdmin_trainersdepartment, name='SuperAdmin_trainersdepartment'),
+    re_path(r'^SuperAdmin_trainerstable/(?P<id>\d+)/$', views.SuperAdmin_trainerstable, name='SuperAdmin_trainerstable'),
+    re_path(r'^SuperAdmin_trainerteams/(?P<id>\d+)/$', views.SuperAdmin_trainerteams, name='SuperAdmin_trainerteams'),
+    re_path(r'^SuperAdmin_trainerteam/(?P<id>\d+)/$', views.SuperAdmin_trainerteam, name='SuperAdmin_trainerteam'),
+    re_path(r'^SuperAdmin_topictable/(?P<id>\d+)/$', views.SuperAdmin_topictable, name='SuperAdmin_topictable'),
+    re_path(r'^SuperAdmin_traineestable/(?P<id>\d+)/$', views.SuperAdmin_traineestable, name='SuperAdmin_traineestable'),
+    re_path(r'^SuperAdmin_traineeprofile/(?P<id>\d+)/$', views.SuperAdmin_traineeprofile, name='SuperAdmin_traineeprofile'),
+    re_path(r'^SuperAdmin_completedtasktable/(?P<id>\d+)/$', views.SuperAdmin_completedtasktable, name='SuperAdmin_completedtasktable'),
+    
+    
+     # current projects-sharon -admin mod
+
+    # re_path(r'^SuperAdmin_profiledash$', views.SuperAdmin_profiledash,name='SuperAdmin_profiledash'),
+    re_path(r'^SuperAdmin_dept/$', views.SuperAdmin_dept, name='SuperAdmin_dept'),
+    re_path(r'^SuperAdmin_pythons$', views.SuperAdmin_pythons, name='SuperAdmin_pythons'),
+    re_path(r'^SuperAdmin_projects/(?P<id>\d+)/$', views.SuperAdmin_projects, name='SuperAdmin_projects'),
+    re_path(r'^SuperAdmin_proj_list/(?P<id>\d+)/$', views.SuperAdmin_proj_list, name='SuperAdmin_proj_list'),
+    re_path(r'^SuperAdmin_proj_det/(?P<id>\d+)/$', views.SuperAdmin_proj_det, name='SuperAdmin_proj_det'),
+    re_path(r'^SuperAdmin_proj_mngrs/(?P<id>\d+)/$', views.SuperAdmin_proj_mngrs, name='SuperAdmin_proj_mngrs'),
+    re_path(r'^SuperAdmin_proj_mangrs1/(?P<id>\d+)/$', views.SuperAdmin_proj_mangrs1, name='SuperAdmin_proj_mangrs1'),
+    re_path(r'^SuperAdmin_proj_mangrs2/(?P<id>\d+)/$', views.SuperAdmin_proj_mangrs2, name='SuperAdmin_proj_mangrs2'),  
+    re_path(r'^SuperAdmin_daily_report/(?P<id>\d+)/$', views.SuperAdmin_daily_report, name='SuperAdmin_daily_report'),
+    re_path(r'^SuperAdmin_developers/(?P<id>\d+)/$', views.SuperAdmin_developers, name='SuperAdmin_developers'),
+
+
+# completed projects-subeeesh -admin mod
+
+    re_path(r'^SuperAdmin_proj_cmpltd_new/(?P<id>\d+)/$', views.SuperAdmin_proj_cmpltd_new, name='SuperAdmin_proj_cmpltd_new'),
+    re_path(r'^SuperAdmin_cmpltd_proj_det_new/(?P<id>\d+)/$', views.SuperAdmin_cmpltd_proj_det_new, name='SuperAdmin_cmpltd_proj_det_new'),
+    re_path(r'^SuperAdmin_proj_mngrs_new/(?P<id>\d+)/$', views.SuperAdmin_proj_mngrs_new, name='SuperAdmin_proj_mngrs_new'),
+    re_path(r'^SuperAdmin_proj_mangrs1_new/(?P<id>\d+)/$', views.SuperAdmin_proj_mangrs1_new, name='SuperAdmin_proj_mangrs1_new'),
+    re_path(r'^SuperAdmin_proj_mangrs2_new/(?P<id>\d+)/$', views.SuperAdmin_proj_mangrs2_new, name='SuperAdmin_proj_mangrs2_new'),
+    re_path(r'^SuperAdmin_developers_new/(?P<id>\d+)/$', views.SuperAdmin_developers_new, name='SuperAdmin_developers_new'),
+    re_path(r'^SuperAdmin_daily_report_new/(?P<id>\d+)/$', views.SuperAdmin_daily_report_new, name='SuperAdmin_daily_report_new'),
+
+
+
+
+    re_path(r'^SuperAdmin_employees$', views.SuperAdmin_employees, name='SuperAdmin_employees'),
+    re_path(r'^SuperAdmin_edepartments/(?P<id>\d+)/$', views.SuperAdmin_edepartments, name='SuperAdmin_edepartments'),
+    re_path(r'^SuperAdmin_projectman/(?P<id>\d+)/(?:(?P<did>\d+))?',views.SuperAdmin_projectman, name='SuperAdmin_projectman'),
+    re_path(r'^SuperAdmin_ViewTrainers/(?P<id>\d+)/(?:(?P<did>\d+))?',views.SuperAdmin_ViewTrainers, name='SuperAdmin_ViewTrainers'),
+    re_path(r'^SuperAdmin_View_Trainerprofile/(?P<id>\d+)/$', views.SuperAdmin_View_Trainerprofile, name='SuperAdmin_View_Trainerprofile'),
+    re_path(r'^SuperAdmin_View_Currenttraineesoftrainer/(?P<id>\d+)/$', views.SuperAdmin_View_Currenttraineesoftrainer, name='SuperAdmin_View_Currenttraineesoftrainer'),
+    re_path(r'^SuperAdmin_View_Currenttraineeprofile/(?P<id>\d+)/$', views.SuperAdmin_View_Currenttraineeprofile, name='SuperAdmin_View_Currenttraineeprofile'),
+    re_path(r'^SuperAdmin_proname/(?P<id>\d+)/$', views.SuperAdmin_proname, name='SuperAdmin_proname'),
+    re_path(r'^SuperAdmin_View_Currenttraineetasks/(?P<id>\d+)/$', views.SuperAdmin_View_Currenttraineetasks, name='SuperAdmin_View_Currenttraineetasks'),
+    re_path(r'^SuperAdmin_ViewCurrenttraineeattendancesort/(?P<id>\d+)/$', views.SuperAdmin_ViewCurrenttraineeattendancesort, name='SuperAdmin_ViewCurrenttraineeattendancesort'),
+    re_path(r'^SuperAdmin_View_Previoustraineesoftrainer/(?P<id>\d+)/$', views.SuperAdmin_View_Previoustraineesoftrainer, name='SuperAdmin_View_Previoustraineesoftrainer'),
+    re_path(r'^SuperAdmin_View_Currenttraineeattendance/(?P<id>\d+)/$', views.SuperAdmin_View_Currenttraineeattendance, name='SuperAdmin_View_Currenttraineeattendance'),
+    re_path(r'^SuperAdmin_View_Previoustraineeprofile/(?P<id>\d+)/$', views.SuperAdmin_View_Previoustraineeprofile, name='SuperAdmin_View_Previoustraineeprofile'),
+    re_path(r'^SuperAdmin_View_Previoustraineetasks/(?P<id>\d+)/$', views.SuperAdmin_View_Previoustraineetasks, name='SuperAdmin_View_Previoustraineetasks'),
+    re_path(r'^SuperAdmin_View_Previoustraineeattendance/(?P<id>\d+)/$', views.SuperAdmin_View_Previoustraineeattendance, name='SuperAdmin_View_Previoustraineeattendance'),
+    re_path(r'^SuperAdmin_ViewPrevioustraineeattendancesort/(?P<id>\d+)/$', views.SuperAdmin_ViewPrevioustraineeattendancesort, name='SuperAdmin_ViewPrevioustraineeattendancesort'),
+    re_path(r'^SuperAdmin_View_Trainerattendance/(?P<id>\d+)/$', views.SuperAdmin_View_Trainerattendance, name='SuperAdmin_View_Trainerattendance'),
+    re_path(r'^SuperAdmin_proinvolve/(?P<id>\d+)/$', views.SuperAdmin_proinvolve, name='SuperAdmin_proinvolve'),
+    re_path(r'^SuperAdmin_ViewTrainerattendancesort/(?P<id>\d+)/$', views.SuperAdmin_ViewTrainerattendancesort, name='SuperAdmin_ViewTrainerattendancesort'),
+    re_path(r'^SuperAdmin_promanatten/(?P<id>\d+)/$', views.SuperAdmin_promanatten, name='SuperAdmin_promanatten'),
+    re_path(r'^SuperAdmin_promanattendsort/(?P<id>\d+)/$', views.SuperAdmin_promanattendsort, name='SuperAdmin_promanattendsort'),
+
+
+
+
+    re_path(r'^SuperAdmin_admin_registration/$', views.SuperAdmin_admin_registration, name='SuperAdmin_admin_registration'),
+    re_path(r'^SuperAdmin_registration/$', views.SuperAdmin_registration, name='SuperAdmin_registration'),
+    re_path(r'^SuperAdmin_Add/$', views.SuperAdmin_Add, name='SuperAdmin_Add'),
+
+
+    re_path(r'^SuperAdmin_admin_view$', views.SuperAdmin_admin_view, name='SuperAdmin_admin_view'),
+
+    re_path(r'^admindelete/(?P<id>\d+)/$', views.admindelete, name='admindelete'),
+
+    re_path(r'^SuperAdmin_admin_update/(?P<id>\d+)/$', views.SuperAdmin_admin_update, name='SuperAdmin_admin_update'),
+
+    re_path(r'^SuperAdmin_updatesave/(?P<id>\d+)/$', views.SuperAdmin_updatesave, name='SuperAdmin_updatesave'),
+   
+    
+
+
+
+    re_path(r'^SuperAdmin_Branch$', views.SuperAdmin_Branch, name='SuperAdmin_Branch'),
+    re_path(r'^SuperAdmin_AddBranch$', views.SuperAdmin_AddBranch, name='SuperAdmin_AddBranch'),
+
+
+    re_path(r'^SuperAdmin_Viewbranch/$', views.SuperAdmin_Viewbranch, name='SuperAdmin_Viewbranch'),
+    re_path(r'^SuperAdmin_Updatebranch/(?P<id>\d+)/$', views.SuperAdmin_Updatebranch, name='SuperAdmin_Updatebranch'),  
+    re_path(r'^SuperAdmin_branchupdate/(?P<id>\d+)/$', views.SuperAdmin_branchupdate, name='SuperAdmin_branchupdate'), 
+    re_path(r'^SuperAdmin_Branchdelete/(?P<id>\d+)/$', views.SuperAdmin_Branchdelete, name='SuperAdmin_Branchdelete'),
+
+
+
+    re_path(r'^SuperAdminreply/(?P<id>\d+)/$', views.SuperAdminreply, name="SuperAdminreply"),
+    re_path(r'^SuperAdmin_Reportedissue_department$',views.SuperAdmin_Reportedissue_department, name='SuperAdmin_Reportedissue_department'),
+    re_path(r'^SuperAdmin_ReportedissueShow/(?P<id>\d+)/$',views.SuperAdmin_ReportedissueShow, name='SuperAdmin_ReportedissueShow'),
     ########## end ##########
 
     

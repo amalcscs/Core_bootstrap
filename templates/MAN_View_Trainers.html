@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 {% extends 'MAN_index.html' %}
 {% block content %}
+=======
+{% extends 'index.html' %}
+{% block body %}
+>>>>>>> 4439601a4a1095de45bc22cff47f378125e80b79
 {% load static %}
 
 <div class="row ">
@@ -27,8 +32,12 @@
                 <tr data-href="{% url 'MAN_View_Trainerprofile' i.id %}">
                  
                   <td>
+<<<<<<< HEAD
                   <img src="{{i.photo.url}}" alt="">
                     <span class="ps-2">{{i.fullname}}</span>
+=======
+                    <a href="{% url 'MANViewTrainerprofile' %}" style="text-decoration: none" class="text-muted"><span class="ps-2">Henry Klein</span></a>
+>>>>>>> 4439601a4a1095de45bc22cff47f378125e80b79
                   </td>
                   <td>{{i.employee_id}}</td>
                  

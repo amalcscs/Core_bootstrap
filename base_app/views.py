@@ -1,3 +1,4 @@
+import os
 from django. contrib import messages
 from unicodedata import name
 from django.shortcuts import render
@@ -7055,3 +7056,716 @@ def superadmin_index(request):
 def superadmin_logout(request):
     logout(request)
     return redirect("/")
+
+
+
+#**************************Anandhu Super-Admin Dashboard section**************************
+
+def SuperAdmin_index(request):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     mem = user_registration.objects.filter(id=Adm_id)
+    #     return render(request,'SuperAdmin_index.html',{'mem':mem})
+    # else:
+    #     return redirect('/')
+    return render(request, 'SuperAdmin_index.html')
+
+
+def SuperAdmin_dashboard(request):
+    branch = branch_registration.objects.all()
+    
+    return render(request, 'SuperAdmin_dashboard.html',{'branch_registration':branch})   
+
+
+def SuperAdmin_profile(request,id):
+    branch = branch_registration.objects.get(id = id)
+
+    return render(request, 'SuperAdmin_profile.html',{'branch_registration':branch}) 
+
+
+def SuperAdmin_trainersdepartment(request,id):
+    Dept = department.objects.filter(branch = id)
+    return render(request,'SuperAdmin_trainersdepartment.html',{'Dept':Dept})
+
+
+def SuperAdmin_trainerstable(request,id):
+   
+
+    Trainer = designation.objects.get(designation='Trainer')
+        
+    trainers_data=user_registration.objects.filter(designation=Trainer).filter(department=id)
+    topics=topic.objects.all()
+    return render(request,'SuperAdmin_trainerstable.html',{'trainers_data':trainers_data,'topics':topics})
+
+def SuperAdmin_trainerteams(request,id):
+   
+        user=user_registration.objects.filter(id=id)
+        team=create_team.objects.all()
+        return render(request,'SuperAdmin_trainerteams.html',{'team':team,'user':user}) 
+
+def  SuperAdmin_trainerteam(request,id):
+    
+        id=id
+        Trainee = designation.objects.get(designation='Trainee')
+        num=user_registration.objects.filter(designation=Trainee).filter(team=id).count()
+        num1=topic.objects.filter(team=id).count()
+        return render(request,'SuperAdmin_trainerteam.html',{'id':id,'num':num,'num1':num1})
+
+def SuperAdmin_topictable(request,id):
+    
+    topics=topic.objects.filter(team=id).order_by("-id")
+    return render(request,'SuperAdmin_topictable.html',{'topics':topics})
+        
+def SuperAdmin_traineestable(request,id):
+   
+        Trainee = designation.objects.get(designation='Trainee')
+        trainees_data=user_registration.objects.filter(designation=Trainee).filter(team=id)
+        return render(request,'SuperAdmin_traineestable.html',{'trainees_data':trainees_data}) 
+
+        
+def SuperAdmin_traineeprofile(request,id):
+   
+    trainees_data=user_registration.objects.get(id=id)
+    user=user_registration.objects.get(id=id)
+    num=trainer_task.objects.filter(user=user).filter(task_status='1').count()
+    return render(request,'SuperAdmin_traineeprofile.html',{'trainees_data':trainees_data,'num':num})
+
+def SuperAdmin_completedtasktable(request,id):
+        user=user_registration.objects.get(id=id)
+        task=trainer_task.objects.filter(user=user)
+        return render(request,'BRadmin_completedtasktable.html',{'task_data':task})   
+   
+
+#**************************subeesh akhil sharon  Super-Admin Dashboard-project section**************************
+
+
+# current projects- sharon
+def SuperAdmin_pythons(request):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details = project.objects.all()
+        return render(request,'SuperAdmin_projects.html',{'proj_det':project_details})
+    # else:
+    #     return redirect('/')
+
+def SuperAdmin_dept(request):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        
+        project_details = project.objects.all()
+        depart =department.objects.all()
+        
+        return render(request,'SuperAdmin_dept.html',{'proj_det':project_details,'department':depart})
+    # else:
+    #     return redirect('/')
+
+    
+# def SuperAdmin_profiledash(request):
+#     Num= project.objects.count()
+#     project_details = project.objects.all()
+#     return render(request,'SuperAdmin_profiledash.html',{'proj_det':project_details,'num':Num})
+
+def SuperAdmin_projects(request,id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        Num= project.objects.filter(status='accepted').filter(department=id).count()
+        num= project.objects.filter(status='completed').filter(department=id).count()
+        project_details = project.objects.all()
+        depart =department.objects.get(id=id)
+        id=id
+        return render(request,'SuperAdmin_projects.html',{'proj_det':project_details,'num':Num,'Num':num,'department':depart,'id':id})
+    # else:
+    #     return redirect('/')
+ 
+def SuperAdmin_proj_list(request,id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details = project.objects.filter(department=id)
+        print (project_details.count())
+        return render(request,'SuperAdmin_proj_list.html',{'proj_det':project_details})
+    # else:
+    #     return redirect('/')
+
+def SuperAdmin_proj_det(request,id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details = project.objects.get(id=id)
+        return render(request,'SuperAdmin_proj_det.html',{'proj_det':project_details})
+    # else:
+    #     return redirect('/')
+
+def SuperAdmin_proj_mngrs(request,id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details = project.objects.get(id=id)
+        return render(request,'SuperAdmin_proj_mngrs.html',{'proj_det':project_details})
+    # else:
+    #     return redirect('/')
+
+# def SuperAdmin_proj_mangrs1(request,id):
+#     if request.session.has_key('Adm_id'):
+#         Adm_id = request.session['Adm_id']
+ 
+#     mem = user_registration.objects.filter(id=Adm_id)
+#     project_details = project.objects.get(id=id) 
+#     return render(request,'SuperAdmin_proj_mangrs1.html',{'proj_det':project_details,'mem':mem})
+def SuperAdmin_proj_mangrs1(request,id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details = project.objects.get(id=id) 
+        proj1=project_details.projectmanager_id
+        dept_id=project_details.department_id
+        user_det=user_registration.objects.filter(designation_id=proj1)
+        return render(request,'SuperAdmin_proj_mangrs1.html',{'proj1':proj1,'user_det':user_det,'proj_det':project_details})
+    # else:
+    #     return redirect('/')
+
+def SuperAdmin_proj_mangrs2(request,id):
+    # if request.session.has_key('Adm_id'):
+    #     Adm_id = request.session['Adm_id']
+ 
+    # mem = user_registration.objects.filter(id=Adm_id)
+    project_details = project.objects.get(id=id) 
+    proj1=project_details.designation_id
+    dept_id=project_details.department_id
+    user_det=user_registration.objects.filter(designation_id=proj1).order_by("-id")
+    request.session['proj2'] = id
+    return render(request,'SuperAdmin_proj_mangrs2.html',{'proj1':proj1,'user_det':user_det,'proj_det':project_details})
+
+def SuperAdmin_daily_report(request,id):
+    
+    project_task = project_taskassign.objects.get(user_id=id)
+    tester =tester_status.objects.all()
+    return render(request,'SuperAdmin_daily_report.html',{'proj_task':project_task,'test':tester})
+def SuperAdmin_developers(request,id):
+    proj2=request.session['proj2']
+    
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+    project_details = project.objects.get(id=proj2) 
+    project_task = project_taskassign.objects.filter(project_id = project_details).filter(tl_id=id)
+    user_det=user_registration.objects.all().order_by("-id")
+    progress_bar= tester_status.objects.all()
+    
+    return render(request,'SuperAdmin_developers.html',{'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar,'user_det':user_det})
+    # else:
+    #     return redirect('/')
+
+
+# completed projects- subeesh
+ 
+def SuperAdmin_proj_cmpltd_new(request, id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details=project.objects.filter(department=id)
+        print (project_details.count())
+        return render(request,'SuperAdmin_proj_cmpltd_show.html',{'project': project_details})
+    # else:
+    #     return redirect('/')
+
+
+def SuperAdmin_cmpltd_proj_det_new(request, id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details = project.objects.get(id=id)
+        return render(request,'SuperAdmin_cmpltd_proj_det_show.html',{'project': project_details})
+    # else:
+    #     return redirect('/')
+def SuperAdmin_proj_mngrs_new(request, id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details = project.objects.get(id=id)
+        return render(request,'SuperAdmin_proj_mngrs_show.html', {'project': project_details})
+    # else:
+    #     return redirect('/')
+
+# def SuperAdmin_proj_mangrs1_new(request,id):
+#     if request.session.has_key('Adm_id'):
+#         Adm_id = request.session['Adm_id']
+ 
+#     mem = user_registration.objects.filter(id=Adm_id)
+#     project_details = project.objects.get(id=id)
+#     return render(request,'SuperAdmin_proj_mangrs1_show.html', {'project': project_details,'mem':mem})
+def SuperAdmin_proj_mangrs1_new(request,id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        project_details = project.objects.get(id=id) 
+        proj1=project_details.projectmanager_id
+        dept_id=project_details.department_id
+        user_det=user_registration.objects.filter(designation_id=proj1)
+        return render(request,'SuperAdmin_proj_mangrs1_show.html',{'proj1':proj1,'user_det':user_det,'proj_det':project_details})
+        
+    # else:
+    #     return redirect('/')
+def SuperAdmin_proj_mangrs2_new(request, id):
+    # if request.session.has_key('Adm_id'):
+    #     Adm_id = request.session['Adm_id']
+ 
+    # mem = user_registration.objects.filter(id=Adm_id)
+    project_details = project.objects.get(id=id)
+    project_task = project_taskassign.objects.all()
+    return render(request,'SuperAdmin_proj_mangrs2_show.html', {'project':project_details,'project_taskassign':project_task})
+
+def SuperAdmin_developers_new(request, id):
+    # if request.session.has_key('Adm_id'):
+    #     Adm_id = request.session['Adm_id']
+ 
+    # mem = user_registration.objects.filter(id=Adm_id)
+    project_details = project.objects.get(id=id)
+    project_task = project_taskassign.objects.filter(tl_id = id)
+    progress_bar= tester_status.objects.all()
+    return render(request,'SuperAdmin_developers_show.html', {'project':project_details,'project_taskassign':project_task,'prog_status':progress_bar})
+
+def SuperAdmin_daily_report_new(request, id):
+    # if request.session.has_key('Adm_id'):
+    #     Adm_id = request.session['Adm_id']
+ 
+    # mem = user_registration.objects.filter(id=Adm_id)
+    project_task = project_taskassign.objects.get(user_id=id)
+    tester = tester_status.objects.all()
+    return render(request,'SuperAdmin_daily_report_show.html', {'project':project_task,'tester_status':tester})
+
+
+
+    #**************************meenu nimisha  Super-Admin Dashboard-employee section**************************
+
+def SuperAdmin_employees(request):
+    Dept = department.objects.all()
+    return render(request,'SuperAdmin_Employees1.html',{'Dept':Dept})
+
+        
+def SuperAdmin_edepartments(request,id):
+    Dept = department.objects.get(id = id)
+    deptid=id        
+    Desig = designation.objects.all()
+    return render(request,'SuperAdmin_edpartments.html',{'Desig':Desig,'Dept':Dept,'dept_id':deptid})
+
+def SuperAdmin_projectman(request,id,did):
+        Project_man= designation.objects.get(id = id)
+        project_name = project.objects.filter(designation=Project_man).filter(department=did)
+        Project_man_data=user_registration.objects.filter(designation=Project_man).filter(department=did).order_by("-id")
+        return render(request,'SuperAdmin_projectman.html',{'pro_man_data':Project_man_data,'project_name':project_name,'Project_man':Project_man})
+    
+
+def SuperAdmin_ViewTrainers(request,id,did):       
+    projectname=project.objects.all()
+    trainer=designation.objects.get(id=id)
+    userreg=user_registration.objects.filter(designation=trainer).filter(department=did).order_by("-id")
+    return render(request,'SuperAdmin_ViewTrainers.html', {'user_registration':userreg, 'project':projectname})
+    
+
+
+def SuperAdmin_View_Trainerprofile(request,id):  
+    userreg=user_registration.objects.get(id=id)
+    labels = []
+    data = []
+    queryset = user_registration.objects.filter(id=id)
+    for i in queryset:
+        labels=[i.workperformance,i.attitude,i.creativity]
+        data=[i.workperformance,i.attitude,i.creativity]
+    return render(request,'SuperAdmin_View_Trainerprofile.html', {'user_registration':userreg,'labels':labels,'data':data})
+
+
+
+def SuperAdmin_View_Currenttraineesoftrainer(request,id):
+    user=user_registration.objects.filter(id=id)
+    trainee=designation.objects.get(designation='trainee')
+    user2=user_registration.objects.filter(designation=trainee)
+    return render(request,'SuperAdmin_View_Currenttraineesoftrainer.html',{'user_registration':user,'user_registration2':user2})
+   
+def SuperAdmin_View_Currenttraineeprofile(request,id):
+    userreg=user_registration.objects.get(id=id)
+    labels = []
+    data = []
+    queryset = user_registration.objects.filter(id=id)
+    for i in queryset:
+        labels=[i.workperformance,i.attitude,i.creativity]
+        data=[i.workperformance,i.attitude,i.creativity]
+    return render(request,'SuperAdmin_View_Currenttraineeprofile.html', {'user_registration':userreg,'labels':labels,'data':data})
+   
+       
+def SuperAdmin_View_Currenttraineetasks(request,id):
+        # user=user_registration.objects.get(id=id)
+    tasks=trainer_task.objects.filter(user=id)
+    return render(request,'SuperAdmin_View_Currenttraineetasks.html',{'trainer_task':tasks})
+    
+       
+def SuperAdmin_View_Currenttraineeattendance(request,id):
+    usr=user_registration.objects.get(id=id)
+    return render(request,'SuperAdmin_View_Currenttraineeattendance.html', {'user_registration':usr})
+
+
+def SuperAdmin_ViewCurrenttraineeattendancesort(request,id): 
+    usr=user_registration.objects.get(id=id)
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate') 
+        adata =attendance.objects.filter(date__range=[fromdate,todate]).filter(user_id=id)
+    return render(request,'SuperAdmin_View_Currenttraineeattendancesort.html',{'adata':adata,'user_registration':usr})
+    
+        
+def SuperAdmin_View_Previoustraineesoftrainer(request,id): 
+    user=user_registration.objects.filter(id=id)
+    trainee=designation.objects.get(designation='trainee')
+    user2=user_registration.objects.filter(designation=trainee)
+    return render(request,'SuperAdmin_View_Previoustraineesoftrainer.html',{'user_registration':user,'user_registration2':user2})
+
+def SuperAdmin_View_Previoustraineetasks(request,id):   
+    user=user_registration.objects.get(id=id)
+    tasks=trainer_task.objects.filter(user=user)        
+    return render(request,'SuperAdmin_View_Previoustraineetasks.html',{'trainer_task':tasks})
+
+
+def SuperAdmin_View_Previoustraineeattendance(request,id):
+    usr=user_registration.objects.get(id=id)
+    return render(request,'SuperAdmin_View_Previoustraineeattendance.html', {'user_registration':usr})
+
+
+def SuperAdmin_ViewPrevioustraineeattendancesort(request,id):
+    usr=user_registration.objects.get(id=id)
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate') 
+        adata = attendance.objects.filter(date__range=[fromdate,todate]).filter(user_id=id)
+    return render(request,'SuperAdmin_ViewPrevioustraineeattendancesort.html',{'adata':adata,'user_registration':usr})
+    
+   
+def SuperAdmin_View_Trainerattendance(request,id):
+    usr=user_registration.objects.get(id=id)
+    return render(request,'SuperAdmin_View_Trainerattendance.html', {'user_registration':usr})
+    
+
+
+def SuperAdmin_ViewTrainerattendancesort(request,id):  
+    usr=user_registration.objects.get(id=id)
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate') 
+        adata = attendance.objects.filter(date__range=[fromdate,todate]).filter(user_id=id)
+    return render(request,'SuperAdmin_ViewTrainerattendancesort.html',{'adata':adata,'user_registration':usr})
+    
+
+def SuperAdmin_View_Previoustraineeprofile(request,id):   
+    usr=user_registration.objects.get(id=id)
+    labels = []
+    data = []
+    queryset = user_registration.objects.filter(id=id)
+    for i in queryset:
+        labels=[i.workperformance,i.attitude,i.creativity]
+        data=[i.workperformance,i.attitude,i.creativity]
+    return render(request,'SuperAdmin_View_Previoustraineeprofile.html', {'user_registration':usr,'labels':labels,'data':data})
+    
+    
+def SuperAdmin_proname(request,id):
+    Project_man_data = user_registration.objects.get(id = id)
+    labels = []
+    data = []
+    queryset = user_registration.objects.filter(id=id)
+    for i in queryset:
+        labels=[i.workperformance,i.attitude,i.creativity]
+        data=[i.workperformance,i.attitude,i.creativity]
+    return render(request,'SuperAdmin_proname.html',{'pro_man_data':Project_man_data,'labels':labels,'data':data})
+    
+
+def SuperAdmin_proinvolve(request,id):
+    Pro_data = project.objects.filter(projectmanager_id = id).order_by("-id")
+    return render(request,'SuperAdmin_proinvolve.html',{'pro_data':Pro_data})
+    
+def SuperAdmin_promanatten(request,id):
+    id = id
+    return render(request, 'SuperAdmin_promanatten.html',{'id':id})
+    
+
+def SuperAdmin_promanattendsort(request,id):
+    id = id
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate') 
+            # mem1 = attendance.objects.raw('select * from app_attendance where user_id and date between "'+fromdate+'" and "'+todate+'"')
+        mem1 = attendance.objects.filter(date__range=[fromdate, todate]).filter(user_id = id)
+    return render(request, 'SuperAdmin_promanattensort.html',{'mem1':mem1,'id':id})
+    
+
+
+
+
+
+
+def SuperAdmin_admin_registration(request):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        return render(request,'SuperAdmin_admin_registration.html')
+
+def SuperAdmin_registration(request):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        branches=branch_registration.objects.all()
+        
+        return render(request,'SuperAdmin_registration.html',{'branches':branches,})
+
+def SuperAdmin_Add(request):
+    
+    if request.method == 'POST':
+        fn1 = request.POST['fname']
+        fn2 = request.POST['faname']
+        fn3 = request.POST['adob']
+        fn4 = request.POST['agender']
+        fn5 = request.POST['amobile']
+        fn6 = request.POST['aemail']
+        fn7 = request.POST['aalternative']
+        fn8 = request.POST['Adminbranch']
+        fn9 = request.FILES['aproof']
+        fn10 = request.FILES['cphoto']
+        
+        branches = branch_registration.objects.get(branch_name=fn8)
+        
+        new2 = user_registration(fullname=fn1, fathername=fn2, dateofbirth=fn3, gender=fn4, mobile=fn5, email=fn6, alternativeno=fn7,branch=branches,
+                                idproof=fn9, photo=fn10)
+        new2.save()
+        return redirect('SuperAdmin_registration')
+    else:
+        return redirect('SuperAdmin_registration')
+
+
+
+
+def SuperAdmin_admin_view(request):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+    designations=designation.objects.get(designation='Admin')
+    user=user_registration.objects.filter(designation=designations)
+    return render(request,'SuperAdmin_view_admin.html',{'user_registration':user,'designation':designations})
+
+def admindelete(request, id):
+    user = user_registration.objects.get(id=id)
+    os.remove(user.photo.path)
+    user.delete()
+    return redirect('SuperAdmin_view_admin')
+
+
+def SuperAdmin_admin_update(request,id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        user=user_registration.objects.get(id=id)
+        branchs=branch_registration.objects.all()
+
+        return render(request,'SuperAdmin_update_admin.html',{'user_registration':user,'branch_registration':branchs})
+
+def SuperAdmin_updatesave(request,id):
+        
+        if request.method == 'POST':
+            usr = user_registration.objects.get(id=id)
+            usr.fullname = request.POST.get('aname')
+            usr.fathername = request.POST.get('fname')
+            usr.dateofbirth = request.POST.get('date')
+            usr.gender = request.POST.get('gen')
+            usr.mobile = request.POST.get('mob')
+            usr.email = request.POST.get('mail')
+            usr.alternativeno = request.POST.get('alternative')
+            try:
+                usr.idproof = request.FILES['idp']
+                usr.photo = request.FILES['pic']
+            except:
+                pass
+            
+            br_id = request.POST.get("Adminbranch")
+            usr.branch_id = br_id
+            usr.save()
+            return redirect('SuperAdmin_view_admin')
+
+
+
+
+
+
+
+
+def SuperAdmin_Branch(request):
+    return render(request,'SuperAdmin_Branch.html')
+
+def SuperAdmin_AddBranch(request):
+    if request.method == 'POST':
+        br1 = request.POST['Brname']
+        br2 = request.POST['location']
+        br3 = request.POST['Brtype']
+        br4 = request.POST['Bradmin']
+        br5 = request.POST['Bremail']
+        br6 = request.POST['Brcontact']
+        br7 = request.FILES['img[]']
+
+        new1 = branch_registration(branch_name=br1,location=br2,
+                                  branch_type=br3, branch_admin=br4,logo = br7,
+                                  email= br5,mobile =br6)
+        new1.save()
+
+    return render(request,'SuperAdmin_AddBranch.html')
+
+
+
+
+
+def SuperAdmin_Viewbranch(request):
+    # if 'm_id' in request.session:
+    #     if request.session.has_key('m_id'):
+    #         m_id = request.session['m_id']
+        
+    # mem = user_registration.objects.filter(id=m_id)
+
+    branch=branch_registration.objects.all()
+    return render(request,'SuperAdmin_Viewbranch.html',{'branch_registration':branch})
+
+def SuperAdmin_Updatebranch(request,id):
+    # if 'm_id' in request.session:
+    #     if request.session.has_key('m_id'):
+    #         m_id = request.session['m_id']
+        
+    # mem = user_registration.objects.filter(id=m_id)
+
+    branch=branch_registration.objects.get(id=id)
+   
+    return render(request,'SuperAdmin_Updatebranch.html',{'branch_registration':branch})
+
+
+def SuperAdmin_branchupdate(request,id):
+    if request.method=="POST":
+        br=branch_registration.objects.get(id=id)
+        br.branch_name=request.POST['brname']
+        br.location=request.POST['brlocation']
+        br.branch_type=request.POST['brtype']
+        br.branch_admin=request.POST['bradmin']
+        br.email=request.POST['bremail']
+        br.mobile=request.POST['brmobile']
+        br.save()
+        
+        lg=branch_registration.objects.get(id=id)
+        try: 
+            lg.logo = request.FILES['photo']
+            lg.save()
+        except:
+            br.save()
+        
+        
+
+    
+       
+
+        return redirect('SuperAdmin_Viewbranch')
+
+
+def SuperAdmin_Branchdelete(request,id):
+    branch=branch_registration.objects.get(id=id)
+    try:
+        
+        branch.delete()
+        return redirect('SuperAdmin_Viewbranch')
+    except:
+        messages.success(request, "  Error Occured: It can't be deleted, it used as ForeignKey Constrain !!")
+        return redirect('SuperAdmin_Viewbranch')
+
+
+
+
+
+
+
+
+def SuperAdmin_ReportedissueShow(request,id):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        reported_issues=reported_issue.objects.all()
+        branches=branch_registration.objects.get(id=id)
+        user=user_registration.objects.filter(branch_id = id)
+        return render(request,'SuperAdmin_ReportedissueShow.html',{'branch':branches,'reported_issue':reported_issues,'user_registration':user})
+    # else:
+    #     return redirect('/')
+
+def SuperAdmin_Reportedissue_department(request):
+    # if 'Adm_id' in request.session:
+    #     if request.session.has_key('Adm_id'):
+    #         Adm_id = request.session['Adm_id']
+    #     else:
+    #         variable="dummy"
+    #     Adm = user_registration.objects.filter(id=Adm_id)
+        branch=branch_registration.objects.all()
+        file = user_registration.objects.all()
+        return render(request, 'SuperAdmin_Reportedissue_department.html',{'branches':branch,'files':file})
+    # else:
+    #     return redirect('/')
+
+def SuperAdminreply(request,id):
+        if request.method == 'POST':
+            v = reported_issue.objects.get(id=id)
+            v.reply=request.POST.get('reply')
+            v.save()
+        return redirect('SuperAdmin_Reportedissue_department')

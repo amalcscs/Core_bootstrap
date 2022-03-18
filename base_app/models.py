@@ -10,8 +10,8 @@ class branch_registration(models.Model):
     branch_admin = models.CharField(max_length=100)
     branch_type = models.CharField(max_length=100)
     email = models.EmailField(max_length=240, null=True,default='')
-    contact = models.CharField(max_length=100,default='')
-    files=models.FileField(upload_to = 'images/', null=True, blank=True,default='')
+    mobile = models.CharField(max_length=100,default='')
+    logo=models.FileField(upload_to = 'images/', null=True, blank=True,default='')
     status = models.CharField(max_length=100)
 
     def __str__(self):
