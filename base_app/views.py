@@ -159,7 +159,11 @@ def login(request):
             pwd_valid = check_password(password, user.password)
             if pwd_valid:
                 request.session['SAdm_id'] = user.id
-                return redirect('superadmin_index')
+                Num1 = project.objects.count()
+                Num = user_registration.objects.count()
+                Trainer = designation.objects.get(designation='trainer')
+                trcount=user_registration.objects.filter(designation=Trainer).count()
+                return redirect( 'SuperAdmin_dashboard')
             else:
                 msg_error = "Password is incorrect"
                 return render(request, 'login.html', {'msg_error': msg_error})
@@ -7024,6 +7028,7 @@ def registrationdelete(request,id):
     man.delete()
     return redirect('man_registration')
 
+#super admin views #
 def superadmin_changepwd(request):
     if 'SAdm_id' in request.session:
         if request.session.has_key('SAdm_id'):
@@ -7054,7 +7059,7 @@ def superadmin_index(request):
     return render(request,'SuperAdmin_index.html',{'users':users})
 
 def superadmin_logout(request):
-    logout(request)
+    request.session.flush()
     return redirect("/")
 
 
@@ -7082,8 +7087,11 @@ def SuperAdmin_dashboard(request):
 
 def SuperAdmin_profile(request,id):
     branch = branch_registration.objects.get(id = id)
-
-    return render(request, 'SuperAdmin_profile.html',{'branch_registration':branch}) 
+    Num1 = project.objects.filter(branch_id=id).count()
+    Num = user_registration.objects.filter(branch_id=id).count()
+    Trainer = designation.objects.get(designation='trainer')
+    trcount=user_registration.objects.filter(designation=Trainer,branch_id=id).count()
+    return render(request, 'SuperAdmin_profile.html',{'br':branch,'Num1':Num1,'Num':Num,'trcount':trcount}) 
 
 
 def SuperAdmin_trainersdepartment(request,id):
@@ -7136,7 +7144,7 @@ def SuperAdmin_traineeprofile(request,id):
 def SuperAdmin_completedtasktable(request,id):
         user=user_registration.objects.get(id=id)
         task=trainer_task.objects.filter(user=user)
-        return render(request,'BRadmin_completedtasktable.html',{'task_data':task})   
+        return render(request,'SuperAdmin_completedtasktable.html',{'task_data':task})   
    
 
 #**************************subeesh akhil sharon  Super-Admin Dashboard-project section**************************
@@ -7155,7 +7163,7 @@ def SuperAdmin_pythons(request):
     # else:
     #     return redirect('/')
 
-def SuperAdmin_dept(request):
+def SuperAdmin_dept(request,id):
     # if 'Adm_id' in request.session:
     #     if request.session.has_key('Adm_id'):
     #         Adm_id = request.session['Adm_id']
@@ -7164,7 +7172,7 @@ def SuperAdmin_dept(request):
     #     Adm = user_registration.objects.filter(id=Adm_id)
         
         project_details = project.objects.all()
-        depart =department.objects.all()
+        depart =department.objects.filter(branch=id)
         
         return render(request,'SuperAdmin_dept.html',{'proj_det':project_details,'department':depart})
     # else:
@@ -7257,29 +7265,26 @@ def SuperAdmin_proj_mangrs2(request,id):
  
     # mem = user_registration.objects.filter(id=Adm_id)
     project_details = project.objects.get(id=id) 
-    proj1=project_details.designation_id
+    proj1=project_details.projectmanager_id
     dept_id=project_details.department_id
-    user_det=user_registration.objects.filter(designation_id=proj1).order_by("-id")
-    request.session['proj2'] = id
+    user_det=user_registration.objects.filter(designation_id=proj1)
+    
     return render(request,'SuperAdmin_proj_mangrs2.html',{'proj1':proj1,'user_det':user_det,'proj_det':project_details})
 
 def SuperAdmin_daily_report(request,id):
-    
-    project_task = project_taskassign.objects.get(user_id=id)
-    tester =tester_status.objects.all()
-    return render(request,'SuperAdmin_daily_report.html',{'proj_task':project_task,'test':tester})
+
+
+
+    proj_name =  project_taskassign.objects.all()
+    tester_name = user_registration.objects.all()
+    tester = tester_status.objects.filter(user_id=id)
+    return render(request,'SuperAdmin_daily_report.html',{'test':tester, 'tester_name':tester_name, 'proj_name':proj_name})
 def SuperAdmin_developers(request,id):
-    proj2=request.session['proj2']
-    
-    # if 'Adm_id' in request.session:
-    #     if request.session.has_key('Adm_id'):
-    #         Adm_id = request.session['Adm_id']
-    #     else:
-    #         variable="dummy"
-    #     Adm = user_registration.objects.filter(id=Adm_id)
-    project_details = project.objects.get(id=proj2) 
+    # proj2=request.session['proj2']
+    # project_details = project.objects.get(id=proj2) 
+    project_details = project.objects.get(id=id) 
     project_task = project_taskassign.objects.filter(project_id = project_details).filter(tl_id=id)
-    user_det=user_registration.objects.all().order_by("-id")
+    user_det=user_registration.objects.filter(tl_id=id).order_by("-id")
     progress_bar= tester_status.objects.all()
     
     return render(request,'SuperAdmin_developers.html',{'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar,'user_det':user_det})
@@ -7380,8 +7385,8 @@ def SuperAdmin_daily_report_new(request, id):
 
     #**************************meenu nimisha  Super-Admin Dashboard-employee section**************************
 
-def SuperAdmin_employees(request):
-    Dept = department.objects.all()
+def SuperAdmin_employees(request,id):
+    Dept = department.objects.filter(branch=id)
     return render(request,'SuperAdmin_Employees1.html',{'Dept':Dept})
 
         
@@ -7563,7 +7568,7 @@ def SuperAdmin_registration(request):
         return render(request,'SuperAdmin_registration.html',{'branches':branches,})
 
 def SuperAdmin_Add(request):
-    
+    des=designation.objects.get(designation="admin")
     if request.method == 'POST':
         fn1 = request.POST['fname']
         fn2 = request.POST['faname']
@@ -7576,10 +7581,10 @@ def SuperAdmin_Add(request):
         fn9 = request.FILES['aproof']
         fn10 = request.FILES['cphoto']
         
-        branches = branch_registration.objects.get(branch_name=fn8)
+       
         
-        new2 = user_registration(fullname=fn1, fathername=fn2, dateofbirth=fn3, gender=fn4, mobile=fn5, email=fn6, alternativeno=fn7,branch=branches,
-                                idproof=fn9, photo=fn10)
+        new2 = user_registration(fullname=fn1, fathername=fn2, dateofbirth=fn3, gender=fn4, mobile=fn5, email=fn6, alternativeno=fn7,branch_id=fn8,
+                                idproof=fn9, photo=fn10,designation_id=des.id)
         new2.save()
         return redirect('SuperAdmin_registration')
     else:
@@ -7601,9 +7606,12 @@ def SuperAdmin_admin_view(request):
 
 def admindelete(request, id):
     user = user_registration.objects.get(id=id)
-    os.remove(user.photo.path)
-    user.delete()
-    return redirect('SuperAdmin_view_admin')
+    try:
+        user.delete()
+        return redirect('SuperAdmin_admin_view')
+    except:
+        messages.success(request, "  Error Occured: It can't be deleted, it used as ForeignKey Constrain !!")
+        return redirect('SuperAdmin_admin_view')
 
 
 def SuperAdmin_admin_update(request,id):
@@ -7638,7 +7646,7 @@ def SuperAdmin_updatesave(request,id):
             br_id = request.POST.get("Adminbranch")
             usr.branch_id = br_id
             usr.save()
-            return redirect('SuperAdmin_view_admin')
+            return redirect('SuperAdmin_admin_view')
 
 
 

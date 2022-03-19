@@ -50,22 +50,30 @@
                   </thead>
                   <tbody>
                     {% for i in test %}
-                      {% if i.user_id == proj_task.id%}
                     <tr>
                       <td>{{i.date|date:"d-m-Y" }}</td>
-                      <td> {{i.user}} </td>
                       <td>
-                        {{i.task.description}}
+                        {% for tester_name in tester_name %}
+                        {% if i.tester_id == tester_name.id %}
+                        {{tester_name.fullname }} 
+                        {%endif%}
+                        {% endfor %}
+                      </td>
+                      <td>
+                        {% for proj_name in proj_name %}
+                        {% if proj_name.developer_id == i.user_id %}
+                        {{proj_name.task }} 
+                        {%endif%}
+                        {% endfor %}
                       </td>
                       <td> {{i.subtask}}</td>
-                      <td> {{i.status}} </td>
+                      <td> {{i.workdone}} </td>
                       <td>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary" ><a href="{{ i.files.url }}" style="color: white;" download="{{ i.files.url}}">Download</a></button>
                         </div>
                         </td>
                     </tr>
-                    {% endif %}
                     {% endfor %}
                     <!-- <tr>
                       <td>

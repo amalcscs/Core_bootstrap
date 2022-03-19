@@ -29,7 +29,7 @@
                                </div>
                                <div class="form-group">
                                 <label for="exampleTextarea1">Date Of Birth</label>
-                                <input type="date" class="form-control" name="adob" id="exampleTextarea1" style="color:white;" rows="4">
+                                <input type="date" class="form-control txtDate" name="adob" id="exampleTextarea1" style="color:white;" rows="4">
                                    </div>
                                <div class="form-group">
                                 <label>Gender</label>                        
@@ -102,4 +102,20 @@
                         </div>
                     </div>
                      
+
+                    <script>
+                      $(function() {
+                          var dtToday = new Date();
+                          var month = dtToday.getMonth() + 1;
+                          var day = dtToday.getDate();
+                          var year = dtToday.getFullYear();
+                          if (month < 10)
+                              month = '0' + month.toString();
+                          if (day < 10)
+                              day = '0' + day.toString();
+                          var maxDate = year + '-' + month + '-' + day;
+                          $('.txtDate').attr('max', maxDate);
+                  
+                      })
+                  </script>
   {% endblock %}

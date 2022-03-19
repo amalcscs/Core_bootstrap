@@ -932,7 +932,7 @@ urlpatterns = [
      # current projects-sharon -admin mod
 
     # re_path(r'^SuperAdmin_profiledash$', views.SuperAdmin_profiledash,name='SuperAdmin_profiledash'),
-    re_path(r'^SuperAdmin_dept/$', views.SuperAdmin_dept, name='SuperAdmin_dept'),
+    re_path(r'^SuperAdmin_dept/(?P<id>\d+)/$', views.SuperAdmin_dept, name='SuperAdmin_dept'),
     re_path(r'^SuperAdmin_pythons$', views.SuperAdmin_pythons, name='SuperAdmin_pythons'),
     re_path(r'^SuperAdmin_projects/(?P<id>\d+)/$', views.SuperAdmin_projects, name='SuperAdmin_projects'),
     re_path(r'^SuperAdmin_proj_list/(?P<id>\d+)/$', views.SuperAdmin_proj_list, name='SuperAdmin_proj_list'),
@@ -957,7 +957,7 @@ urlpatterns = [
 
 
 
-    re_path(r'^SuperAdmin_employees$', views.SuperAdmin_employees, name='SuperAdmin_employees'),
+    re_path(r'^SuperAdmin_employees/(?P<id>\d+)/$', views.SuperAdmin_employees, name='SuperAdmin_employees'),
     re_path(r'^SuperAdmin_edepartments/(?P<id>\d+)/$', views.SuperAdmin_edepartments, name='SuperAdmin_edepartments'),
     re_path(r'^SuperAdmin_projectman/(?P<id>\d+)/(?:(?P<did>\d+))?',views.SuperAdmin_projectman, name='SuperAdmin_projectman'),
     re_path(r'^SuperAdmin_ViewTrainers/(?P<id>\d+)/(?:(?P<did>\d+))?',views.SuperAdmin_ViewTrainers, name='SuperAdmin_ViewTrainers'),

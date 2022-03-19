@@ -151,7 +151,7 @@
 <div class="row">
     <div class="col-sm-4 grid-margin">
         <div class="card">
-            <a href="{% url 'SuperAdmin_dept' %}" style="text-decoration: none; color: white;">
+            <a href="{% url 'SuperAdmin_dept' br.id  %}" style="text-decoration: none; color: white;">
                 <div class="card-body">
                     <h5>PROJECT</h5>
                     <div class="row">
@@ -172,13 +172,13 @@
     </div>
     <div class="col-sm-4 grid-margin">
         <div class="card">
-            <a href="{% url 'SuperAdmin_employees'%}" style="text-decoration: none; color: white;">
+            <a href="{% url 'SuperAdmin_employees'  br.id %}" style="text-decoration: none; color: white;">
                 <div class="card-body">
                     <h5>EMPLOYEES</h5>
                     <div class="row">
                         <div class="col-8 col-sm-12 col-xl-8 my-auto">
                             <div class="d-flex d-sm-block d-md-flex align-items-center">
-                                <h2 class="mb-0">{{ num }}</h2>
+                                <h2 class="mb-0">{{ Num }}</h2>
                                 <!-- <p class="text-success ms-2 mb-0 font-weight-medium">+8.3%</p> -->
                             </div>
                             <!-- <h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6> -->
@@ -193,7 +193,7 @@
     </div>
     <div class="col-sm-4 grid-margin">
         <div class="card">
-            <a href="{% url 'SuperAdmin_trainersdepartment' branch_registration.id  %}" style="text-decoration: none; color: white;">
+            <a href="{% url 'SuperAdmin_trainersdepartment' br.id  %}" style="text-decoration: none; color: white;">
                 <div class="card-body">
                     <h5>TRAINING</h5>
                     <div class="row">

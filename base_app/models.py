@@ -4,47 +4,47 @@ from django.db import models
 
 # Create your models here.
 
+
 class branch_registration(models.Model):
     branch_name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     branch_admin = models.CharField(max_length=100)
     branch_type = models.CharField(max_length=100)
-    email = models.EmailField(max_length=240, null=True,default='')
-    mobile = models.CharField(max_length=100,default='')
-    logo=models.FileField(upload_to = 'images/', null=True, blank=True,default='')
+    email = models.EmailField(max_length=240, null=True, default='')
+    mobile = models.CharField(max_length=100, default='')
+    logo = models.FileField(upload_to='images/',
+                            null=True, blank=True, default='')
     status = models.CharField(max_length=100)
 
     def __str__(self):
         return self.branch_name
 
 
-
-
-
 class department(models.Model):
     branch = models.ForeignKey(branch_registration, on_delete=models.DO_NOTHING,
                                related_name='departmentbranch', null=True, blank=True)
     department = models.CharField(max_length=100)
-   
-    files=models.FileField(upload_to = 'images/', null=True, blank=True)
-    status = models.CharField(max_length=100)
 
+    files = models.FileField(upload_to='images/', null=True, blank=True)
+    status = models.CharField(max_length=100)
 
     def __str__(self):
         return self.department
 
+
 class designation(models.Model):
-    department = models.ForeignKey(department, on_delete=models.DO_NOTHING , related_name='departmentbranch',null=True,blank=True)
+    department = models.ForeignKey(
+        department, on_delete=models.DO_NOTHING, related_name='departmentbranch', null=True, blank=True)
     branch = models.ForeignKey(branch_registration, on_delete=models.DO_NOTHING,
                                related_name='designationbranch', null=True, blank=True)
     designation = models.CharField(max_length=100)
-   
-    files=models.FileField(upload_to = 'images/', null=True, blank=True)
-    status = models.CharField(max_length=100)
 
+    files = models.FileField(upload_to='images/', null=True, blank=True)
+    status = models.CharField(max_length=100)
 
     def __str__(self):
         return self.designation
+
 
 class create_team(models.Model):
     name = models.CharField(max_length=200)
@@ -53,7 +53,6 @@ class create_team(models.Model):
     status = models.CharField(max_length=200)
     team_count = models.IntegerField(default=0)
     team_status = models.CharField(max_length=200, default='0')
-
 
     def __str__(self):
         return self.name
@@ -90,7 +89,7 @@ class user_registration(models.Model):
     permanentcountry = models.CharField(max_length=240, null=True)
     mobile = models.CharField(max_length=240, null=True)
     alternativeno = models.CharField(max_length=240, null=True)
-    employee_id = models.CharField(max_length=240,null=True,default='')
+    employee_id = models.CharField(max_length=240, null=True, default='')
     email = models.EmailField(max_length=240, null=True)
     password = models.CharField(max_length=240, null=True)
     idproof = models.FileField(upload_to='images/', null=True, blank=True)
@@ -105,10 +104,9 @@ class user_registration(models.Model):
     enddate = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
     status = models.CharField(max_length=240, null=True, default='')
-    tl_id = models.IntegerField(default='0',null=True, blank=True)
-    projectmanager_id = models.IntegerField(default='0',null=True, blank=True)
-    
-    
+    tl_id = models.IntegerField(default='0', null=True, blank=True)
+    projectmanager_id = models.IntegerField(default='0', null=True, blank=True)
+
     def __str__(self):
         return self.fullname
 
@@ -141,7 +139,6 @@ class extracurricular(models.Model):
         max_length=240, default='', null=True, blank=True)
     status = models.CharField(max_length=240, default='')
 
-
     def __str__(self):
         return self.projecttitle
 
@@ -163,22 +160,25 @@ class qualification(models.Model):
     pg = models.CharField(max_length=240, null=True)
     status = models.CharField(max_length=100, default='')
 
-
     def __str__(self):
         return self.user
 
 
 class project(models.Model):
     projectmanager = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
-                             related_name='projectuser', null=True, blank=True)
+                                       related_name='projectuser', null=True, blank=True)
     designation = models.ForeignKey(
         designation, on_delete=models.DO_NOTHING, related_name='projectdesignation', null=True, blank=True)
     department = models.ForeignKey(
         department, on_delete=models.DO_NOTHING, related_name='projectdepartment', null=True, blank=True)
-    tester = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING, 
-                               related_name='projecttester',null=True,blank=True,default='')
+    tester = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
+                               related_name='projecttester', null=True, blank=True, default='')
+
+    branch = models.ForeignKey(branch_registration, on_delete=models.DO_NOTHING,
+                               related_name='branch', null=True, blank=True, default='')
     project = models.CharField(max_length=100,  null=True, blank=True)
-    rejectdate=models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
+    rejectdate = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
     description = models.CharField(max_length=100,  null=True, blank=True)
     startdate = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
@@ -189,7 +189,6 @@ class project(models.Model):
     user_reason = models.CharField(max_length=100, null=True, blank=True)
     status = models.CharField(max_length=100, null=True, blank=True)
 
-
     def __str__(self):
         return self.project
 
@@ -198,7 +197,7 @@ class project_taskassign(models.Model):
     project = models.ForeignKey(project, on_delete=models.DO_NOTHING,
                                 related_name='project_taskassignproject', null=True, blank=True)
     developer = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
-                             related_name='project_taskassignuser', null=True, blank=True)
+                                  related_name='project_taskassignuser', null=True, blank=True)
     tl = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
                            related_name='project_taskassigntl', null=True, blank=True)
     tester = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
@@ -211,25 +210,27 @@ class project_taskassign(models.Model):
     enddate = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
     files = models.FileField(upload_to='images/', null=True, blank=True)
-    extension = models.IntegerField(null=True, blank=True,default='0')
+    extension = models.IntegerField(null=True, blank=True, default='0')
     reason = models.TextField(null=True, blank=True)
     extension_status = models.CharField(max_length=200, null=True, blank=True)
-    extension_date= models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
+    extension_date = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
     tl_description = models.CharField(max_length=200, null=True, blank=True)
     submitted_date = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
     employee_files = models.FileField(
         upload_to='images/', null=True, blank=True)
     employee_description = models.TextField(null=True, blank=True)
-    designation=models.CharField(max_length=200,null=True,blank=True)
-    department=models.CharField(max_length=200,null=True,blank=True)
-    progress = models.IntegerField(default='0', null=True) 
-    projectstatus = models.CharField(max_length=200, null=True, blank=True,default="In progress")
+    designation = models.CharField(max_length=200, null=True, blank=True)
+    department = models.CharField(max_length=200, null=True, blank=True)
+    progress = models.IntegerField(default='0', null=True)
+    projectstatus = models.CharField(
+        max_length=200, null=True, blank=True, default="In progress")
     status = models.CharField(max_length=200, null=True, blank=True)
-    
 
     def __str__(self):
         return self.project.project
+
 
 class test_status(models.Model):
     user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
@@ -237,18 +238,18 @@ class test_status(models.Model):
     project = models.ForeignKey(project, on_delete=models.DO_NOTHING,
                                 related_name='test_statusproject', null=True, blank=True)
     subtask = models.ForeignKey(project_taskassign, on_delete=models.DO_NOTHING,
+                                related_name='test_statustaskname', null=True, blank=True)
+    taskname = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
                                  related_name='test_statustaskname', null=True, blank=True)
-    taskname = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING, 
-                                 related_name='test_statustaskname',null=True,blank=True)
     date = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
     workdone = models.TextField(null=True)
     files = models.FileField(upload_to='images/', null=True, blank=True)
 
-
     def __str__(self):
         return self.project.project
-    
+
+
 class tester_status(models.Model):
     tester = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
                                related_name='tester_statustester', null=True, blank=True)
@@ -258,8 +259,8 @@ class tester_status(models.Model):
                              related_name='tester_statustask', null=True, blank=True)
     user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
                              related_name='tester_statususer', null=True, blank=True)
-    subtask = models.ForeignKey(project_taskassign, on_delete=models.DO_NOTHING, 
-                                related_name='tester_statussubtask',null=True,blank=True)
+    subtask = models.ForeignKey(project_taskassign, on_delete=models.DO_NOTHING,
+                                related_name='tester_statussubtask', null=True, blank=True)
     date = models.DateField(
         auto_now_add=False, auto_now=False,  null=True, blank=True)
     workdone = models.TextField(max_length=200, null=True, blank=True)
@@ -267,7 +268,6 @@ class tester_status(models.Model):
     progress = models.IntegerField()
     status = models.CharField(max_length=200, null=True, blank=True)
 
-   
     def __str__(self):
         return self.project.project
 
@@ -285,7 +285,6 @@ class reported_issue(models.Model):
     issuestatus = models.CharField(max_length=200)
     designation_id = models.CharField(max_length=200)
 
-
     def __str__(self):
         return self.reporter
 
@@ -294,11 +293,10 @@ class attendance(models.Model):
     user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
                              related_name='attendanceuser', null=True, blank=True)
     date = models.DateField(null=True, blank=True)
-    
+
     status = models.CharField(max_length=200)
     attendance_status = models.CharField(max_length=200)
 
-   
     def __str__(self):
         return self.user
 
@@ -317,7 +315,6 @@ class leave(models.Model):
     leaveapprovedstatus = models.CharField(max_length=200)
     leave_rejected_reason = models.CharField(max_length=300)
 
-    
     def __str__(self):
         return self.user
 
@@ -346,7 +343,6 @@ class internship(models.Model):
     qr = models.CharField(max_length=200, default='')
     status = models.CharField(max_length=200)
 
-    
     def __str__(self):
         return self.fullname
 
@@ -369,7 +365,6 @@ class trainer_task(models.Model):
     user_files = models.FileField(upload_to='images/', null=True, blank=True)
     status = models.CharField(max_length=200)
     task_status = models.CharField(max_length=200)
-    
 
     def __str__(self):
         return self.trainee
@@ -393,17 +388,22 @@ class topic(models.Model):
     status = models.CharField(max_length=200)
     topic_status = models.CharField(max_length=200)
 
-    
     def __str__(self):
         return self.topic
 
+
 class tasks(models.Model):
-    department = models.ForeignKey(department, on_delete=models.DO_NOTHING, related_name='taskdepartment',null=True,blank=True)
-    designation = models.ForeignKey(designation, on_delete=models.DO_NOTHING, related_name='taskdesignation',null=True,blank=True)
-    user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING, related_name='taskuser',null=True,blank=True)
+    department = models.ForeignKey(
+        department, on_delete=models.DO_NOTHING, related_name='taskdepartment', null=True, blank=True)
+    designation = models.ForeignKey(
+        designation, on_delete=models.DO_NOTHING, related_name='taskdesignation', null=True, blank=True)
+    user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
+                             related_name='taskuser', null=True, blank=True)
     tasks = models.CharField(max_length=240)
-    startdate= models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
-    enddate= models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
-    files=models.FileField(upload_to = 'images/', null=True, blank=True)
+    startdate = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
+    enddate = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
+    files = models.FileField(upload_to='images/', null=True, blank=True)
     description = models.TextField()
-    status =  models.CharField(max_length=200)
+    status = models.CharField(max_length=200)
